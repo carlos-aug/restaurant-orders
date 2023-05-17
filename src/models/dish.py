@@ -39,3 +39,6 @@ class Dish:
 
     def get_ingredients(self):
         return set(self.recipe.keys())
+
+
+# Iniciando projeto
