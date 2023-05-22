@@ -1,12 +1,11 @@
 from src.models.dish import Dish  # noqa: F401, E261, E501
 import pytest
 
-# from src.models.ingredient import Restriction, Ingredient
+from src.models.ingredient import Ingredient, Restriction
 
 
 def test_dish():
     dish = Dish("pizza", 10)
-    # dish1 = Dish("hamburguer", 5)
     assert dish.name == "pizza"
 
     dish1 = Dish("pizza", 10)
@@ -28,4 +27,20 @@ def test_dish():
 
     dish = Dish("pizza", 10)
     dish.recipe = {"tomate": 2, "queijo": -1}
-    assert dish.recipe.get("queijo") is None
+    assert dish.recipe.get("alface") is None
+
+    dish1.add_ingredient_dependency(Ingredient("farinha"), 100)
+
+    assert dish1.get_ingredients() == {
+        Ingredient("farinha"),
+    }
+
+    assert dish1.get_restrictions() == {
+        Restriction.GLUTEN,
+    }
+
+    dish1 = Dish("pizza", 10)
+    dish1.recipe = {"tomate": 2, "queijo": 1}
+    dish2 = Dish("pizza", 10)
+    dish2.recipe = {"tomate": 2, "queijo": 1}
+    assert dish1 == dish2
