@@ -13,6 +13,6 @@ def test_ingredient():
     assert farinha.restrictions == {Restriction.GLUTEN}
     assert farinha.__repr__() == "Ingredient('farinha')"
 
-    assert hash(farinha) != hash(bacon)
-    assert hash(farinha) == hash(farinha)
+    assert farinha.__hash__() != bacon.__hash__()
+    assert farinha.__hash__() == farinha.__hash__()
     assert farinha.__eq__(farinha)
